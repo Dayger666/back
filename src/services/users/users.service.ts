@@ -29,8 +29,11 @@ class UsersService {
     if (!foundUser) {
       const user = await this.model.create({ ...info,
         email }, { transaction });
-      await this.firebaseService.createUser({ email,
-        password });
+      await this.firebaseService.createUser({
+        id: user.id,
+        email,
+        password,
+      });
 
       if (!user) {
         throw new InternalServerError(errorMessages.USER_NOT_CREATED);
